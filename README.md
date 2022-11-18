@@ -1,25 +1,7 @@
-# Getting Started
+# C4C end to end sidecar demo with CAP
 
-Welcome to your new project.
+This is a demo implementation of a "full stack" sidecar extension to SAP C4C.
 
-It contains these folders and files, following our recommended project layout:
-
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
-
-
-## Next Steps
-
-- Open a new terminal and run `cds watch` 
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
-
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
+- Micro UI embedded in standard C4C
+- Seperate persistance in sidecar DB
+- Save sidecar data on entity save on C4C

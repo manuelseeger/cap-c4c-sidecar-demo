@@ -3,81 +3,94 @@
 
 <head>
     <title>Individual Customer Assets</title>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
-        input, input:focus {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-text-size-adjust: none;
-    background: transparent;
-    font-style: normal;
-    font-size: 0.875rem;
-    font-family: "72","72full",Arial,Helvetica,sans-serif;
-    line-height: normal;
-    box-sizing: border-box;
-    min-width: 3rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: inherit;
-    border-radius: 0.25rem;
-    font-weight: 400;
-    margin: 0;
-    width: 100%;
-    color: #30435a!important;
-    padding: 0.625rem 1rem;
-    border-color: #dedede;
-    border-width: 1px;
-    border-style:solid;
-}
-label {
-    font-family: "72","72full",Arial,Helvetica,sans-serif;
-    white-space: nowrap;
-    cursor: text;
-    color: #92a1ae;
-    line-height: 1rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-align: left;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-text-size-adjust: none;
-}
+        #fieldgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1em;
+        }
+
+        input,
+        input:focus {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-text-size-adjust: none;
+            background: transparent;
+            font-style: normal;
+            font-size: 0.875rem;
+            font-family: "72", "72full", Arial, Helvetica, sans-serif;
+            line-height: normal;
+            box-sizing: border-box;
+            min-width: 3rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: inherit;
+            border-radius: 0.5rem;
+            font-weight: 400;
+            margin: 0;
+            color: #30435a !important;
+            padding: 0.625rem 1rem;
+            border-color: #dedede;
+            border-width: 1px;
+            border-style: solid;
+            width: 187px;
+        }
+
+        label {
+            font-family: "72", "72full", Arial, Helvetica, sans-serif;
+            white-space: nowrap;
+            cursor: text;
+            color: #92a1ae;
+            line-height: 1rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-align: left;
+            display: block;
+            font-size: 14px;
+            padding-bottom: 4px;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-text-size-adjust: none;
+
+        }
     </style>
 </head>
 
-<body class="small-container", style="margin-top: 70px;">
-<div id="app">
-    <div v-if="customer">
-        <form @change="submitDraft" >
-            <div class="flex-row">
+<body class="small-container">
+    <div id="app">
+        <form @change="submitDraft">
+            <div id="fieldgrid" v-if="customer">
+
                 <div class="flex-small">
                     <label for="assetsCash">Cash</label>
                     <input type="text" id="assetsCash" v-model="customer.assetsCash" />
-                    
+                </div>
+                <div class="flex-small">
                     <label for="assetsSecurities">Securities</label>
                     <input type="text" id="assetsSecurities" v-model="customer.assetsSecurities" />
                 </div>
-            </div>
-            <div class="flex-row">
                 <div class="flex-small">
                     <label for="assetsRealEstate">Real Estate</label>
                     <input type="text" id="assetsRealEstate" v-model="customer.assetsRealEstate" />
-                    
+                </div>
+                <div class="flex-small">
                     <label for="assetsOther">Other</label>
                     <input type="text" id="assetsOther" v-model="customer.assetsOther" />
                 </div>
-            </div>
+                <div class="flex-small">
                     <label for="assetsTotal">Total Assets</label>
                     <input type="text" readonly="readonly" id="assetsTotal" v-bind:value="totalAssets" />
-                
+                </div>
             </div>
-            <input type="submit" value="Save Draft" @click.prevent="activateDraft">
-        </form>
 
-        
+            <input type="submit" value="Activate Draft" @click.prevent="activateDraft">
+        </form>
     </div>
-</div>
+
 </body>
 
 <script src="app.js" type="module"></script>
+
 </html>
