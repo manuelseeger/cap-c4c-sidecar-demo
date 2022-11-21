@@ -29,7 +29,6 @@ class AzureServiceBusService extends cds.ApplicationService {
 
     const asbEmitter = this;
 
-    // grab the
     const messageHandler = async (message) => {
       const CockpitMessageTypes = ["Created", "Deleted", "Updated"];
       const eventName = [

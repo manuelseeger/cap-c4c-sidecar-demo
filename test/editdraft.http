@@ -1,0 +1,9 @@
+PATCH http://localhost:4004/customer/IndividualCustomers(ID=1,IsActiveEntity=false)
+content-type: application/json
+
+{
+  "assetsCash": "2993",
+  "assetsOther": 32489,
+  "assetsRealEstate": 44444.55,
+  "assetsSecurities": 2432.67
+}

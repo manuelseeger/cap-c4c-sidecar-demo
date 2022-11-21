@@ -1,0 +1,4 @@
+POST http://localhost:4004/customer/activateDraft
+content-type: application/json
+
+

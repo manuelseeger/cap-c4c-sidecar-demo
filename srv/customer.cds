@@ -1,9 +1,8 @@
-using { sidecar.customer as db } from '../db/customer';
+using {sidecar.customer as db} from '../db/customer';
 
-service CustomerService @(path:'/customer') {
+service CustomerService @(path : '/customer') {
     entity IndividualCustomers as projection on db.IndividualCustomers;
-    
-    action submitDraft(customer: CustomerService.IndividualCustomers);
+    action activateDraft();
 }
 
 annotate CustomerService.IndividualCustomers with @odata.draft.enabled;
