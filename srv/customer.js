@@ -1,10 +1,37 @@
 const cds = require("@sap/cds");
 
+async function getC4CCustomer(customerId) {
+  const c4c = await cds.connect.to("C4C_Customer");
+  const { IndividualCustomerCollection } = c4c.entities;
+
+  const query = SELECT.one
+    .from(IndividualCustomerCollection)
+    .columns((c) => {
+      c.CustomerID, c.ObjectID;
+    })
+    .where({ CustomerID: customerId.toString() });
+
+  const customer = await c4c.run(query);
+  return customer;
+}
+
 module.exports = async (srv) => {
   const asb = await cds.connect.to("AzureServiceBus");
 
   srv.before("PATCH", `IndividualCustomers`, async (req) => {
     console.log(req.data);
+  });
+
+  srv.before("READ", "IndividualCustomers", async (req) => {
+    const { ID: customerId, IsActiveEntity } = req.data;
+    console.log(customerId);
+
+    const c4cCustomer = getC4CCustomer(customerId);
+    if (c4cCustomer) {
+      console.log("access granted");
+    } else {
+      req.reject(401, "No Access to this customer");
+    }
   });
 
   asb.on("IndividualCustomer.Root.Updated", async (msg) => {

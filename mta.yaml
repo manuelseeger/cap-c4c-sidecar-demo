@@ -11,6 +11,10 @@ build-parameters:
       commands:
         - npx -p @sap/cds-dk cds build --production
 
+# UI
+# https://blogs.sap.com/2019/06/03/cloudfoundryfun-5-play-asteroids-powered-by-react-secured-by-sap-cloud-platform/
+# https://blogs.sap.com/2020/10/02/serverless-sap-fiori-apps-in-sap-cloud-platform/
+
 modules:
   - name: cap-c4c-sidecar-demo-srv
     type: nodejs
@@ -48,7 +52,7 @@ resources:
       service-plan: hdi-shared
   - name: sidecar-uaa
     description: "Authentication instance for E2E"
-    type: org.cloudfoundry.managed-service
+    type: org.cloudfoundry.existing-service
     parameters:
       service: xsuaa
       service-plan: application
