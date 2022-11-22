@@ -10,7 +10,7 @@ module.exports = async (srv) => {
   asb.on("IndividualCustomer.Root.Updated", async (msg) => {
     const { IndividualCustomers, DraftAdministrativeData } = srv.entities;
 
-    const draftCustomer = await SELECT.one
+    const draftEntry = await SELECT.one
       .from(IndividualCustomers.drafts)
       .columns((cust) => {
         cust.ID,
@@ -31,17 +31,17 @@ module.exports = async (srv) => {
       ObjectId: msg.data.message.entityId,
     });
 
-    if (draftCustomer) {
+    if (draftEntry) {
       const {
         DraftAdministrativeData: draftAdministrativeDataEntity,
-        ...draftEntity
-      } = draftCustomer;
+        ...draftCustomer
+      } = draftEntry;
       // todo check if same processor
       // if (draftAdministrativeDataEntity.InProcessByUser == msg.data.message.changes[0].changedBy)
       if (activeCustomer) {
-        const upd = await UPDATE(IndividualCustomers).with(draftEntity);
+        const upd = await UPDATE(IndividualCustomers).with(draftCustomer);
       } else {
-        const ins = await INSERT(draftEntity).into(IndividualCustomers);
+        const ins = await INSERT(draftCustomer).into(IndividualCustomers);
       }
 
       const del2 = await DELETE(DraftAdministrativeData).where({
