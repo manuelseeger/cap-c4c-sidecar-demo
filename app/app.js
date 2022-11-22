@@ -1,3 +1,5 @@
+const BASEPATH = "/cap";
+
 Vue.createApp({
   data() {
     return {
@@ -23,7 +25,7 @@ Vue.createApp({
   methods: {
     async fetch(id) {
       const response = await fetch(
-        `/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
+        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
       );
       if (response.ok) {
         const data = await response.json();
@@ -31,7 +33,7 @@ Vue.createApp({
       } else if (response.status == 404) {
         // existing draft
         const response = await fetch(
-          `/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
+          `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
         );
         if (response.ok) {
           const data = await response.json();
@@ -46,7 +48,7 @@ Vue.createApp({
             },
           };
           const response = await fetch(
-            `/customer/IndividualCustomers`,
+            `${BASEPATH}/customer/IndividualCustomers`,
             requestOptions
           );
           const data = await response.json();
@@ -73,7 +75,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)`,
+        `${BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)`,
         requestOptions
       );
       console.log(response);
@@ -94,7 +96,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)/draftEdit`,
+        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)/draftEdit`,
         requestOptions
       );
       console.log(response);
@@ -109,7 +111,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)/draftActivate`,
+        `${BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)/draftActivate`,
         requestOptions
       );
       console.log(response);

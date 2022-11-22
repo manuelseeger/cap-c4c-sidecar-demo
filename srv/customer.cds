@@ -1,6 +1,8 @@
 using {sidecar.customer as db} from '../db/customer';
 
-service CustomerService @(path : '/customer') {
+@requires : 'authenticated-user'
+@path     : '/customer'
+service CustomerService {
     entity IndividualCustomers as projection on db.IndividualCustomers;
     action activateDraft();
 }

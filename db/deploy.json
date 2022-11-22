@@ -1,0 +1,31 @@
+{
+  "data": {
+    "systempassword": "",
+    "edition": "cloud",
+    "memory": 32,
+    "vcpu": 2,
+    "additionalWorkers": 0,
+    "whitelistIPs": [],
+    "extensionservices": [
+      {
+        "name": "ConnectivityProxy",
+        "enabled": false,
+        "whitelistIPs": ["0.0.0.0/0"]
+      }
+    ],
+    "storage": 120,
+    "slaLevel": "standard",
+    "disasterRecoveryMode": "no_disaster_recovery",
+    "availabilityZonePlacement": {
+      "primaryAvailabilityZone": "westeurope-3",
+      "highAvailabilityCrossMultiAZEnabled": false
+    },
+    "productVersion": {
+      "releaseCycle": "generally-available-quarterly",
+      "track": "2022.30"
+    }
+  },
+  "metadata": {
+    "ui.hc.sap.com/description": ""
+  }
+}

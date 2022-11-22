@@ -1,8 +1,4 @@
-const {
-  delay,
-  ServiceBusClient,
-  ServiceBusMessage,
-} = require("@azure/service-bus");
+const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const cds = require("@sap/cds");
 
@@ -47,23 +43,6 @@ class AzureServiceBusService extends cds.ApplicationService {
     });
 
     await super.init();
-  }
-
-  async testSending() {
-    const queueName = this.options.credentials.queue;
-    console.log(`Sending ${queueName}`);
-    const sender = this.serviceBusClient.createSender(queueName);
-
-    const messages = [{ body: "Nikolaus Kopernikus" }];
-
-    try {
-      await sender.sendMessages(messages);
-      console.log(`Sent a batch of messages to the queue: ${queueName}`);
-      // Close the sender
-      await sender.close();
-    } catch (e) {
-      console.log(e);
-    }
   }
 }
 
