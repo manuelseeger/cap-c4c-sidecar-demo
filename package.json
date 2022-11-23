@@ -98,7 +98,7 @@
           "kind": "hana-cloud"
         },
         "auth": {
-          "kind": "xsuaa"
+          "impl": "srv/dev-auth.js"
         }
       }
     }

@@ -30,6 +30,7 @@ modules:
     requires:
       - name: sidecar-demo-db
       - name: sidecar-uaa
+      - name: sidecar-destinations
 
   - name: cap-c4c-sidecar-demo-db-deployer
     type: hdb
@@ -40,11 +41,11 @@ modules:
       - name: sidecar-demo-db
 
 resources:
- - name: sidecar-destinations
-   parameters:
-     service-plan: lite
-     service: destination
-   type: org.cloudfoundry.existing-service
+  - name: sidecar-destinations
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-plan: lite
+      service: destination
   - name: sidecar-demo-db
     type: com.sap.xs.hdi-container
     parameters:
