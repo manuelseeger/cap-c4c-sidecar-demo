@@ -1,21 +1,22 @@
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const cds = require("@sap/cds");
+const { getDestination } = require("@sap-cloud-sdk/core");
 
 class AzureServiceBusService extends cds.ApplicationService {
   async init() {
-    const fullyQualifiedNamespace = this.options.credentials.host;
-    const credential = new DefaultAzureCredential();
-    this.serviceBusClient = new ServiceBusClient(
-      fullyQualifiedNamespace,
-      credential
+    const destination = await getDestination(
+      this.options.credentials.destination
     );
 
+    const credential = new DefaultAzureCredential();
+    this.serviceBusClient = new ServiceBusClient(destination.url, credential);
+
     const subscriptionName = "sidecar_e2e_seeg_sap_demo";
-    const topicName = this.options.credentials.topic;
+    const queueName = this.options.credentials.queue;
 
     this.receiver = this.serviceBusClient.createReceiver(
-      topicName,
+      queueName,
       subscriptionName
     );
 

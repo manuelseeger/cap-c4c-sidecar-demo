@@ -12,6 +12,7 @@
     "@sap/cds": "^6",
     "@sap/xssec": "^3",
     "express": "^4",
+    "express-session": "^1.17.3",
     "hdb": "^0.19.0",
     "passport": "^0"
   },
@@ -23,8 +24,7 @@
     "start": "cds run",
     "build": "cds build --production && mbt build -t gen --mtar mta.tar",
     "predeploy": "npm run build",
-    "deploy": "cf deploy gen/mta.tar",
-    "importc4c": "cds"
+    "deploy": "cf deploy gen/mta.tar"
   },
   "engines": {
     "node": "^18.7"
@@ -67,9 +67,10 @@
       "AzureServiceBus": {
         "impl": "srv/external/AzureServiceBus.js",
         "credentials": {
-          "host": "spc-a-e2e-cockpit.servicebus.windows.net",
-          "queue": "incoming",
-          "topic": "swisslife.e2e.cockpit/cockpitmessage"
+          "destination": "azure-service-bus",
+          "path": "/",
+          "topic": "incoming",
+          "queue": "swisslife.e2e.cockpit/cockpitmessage"
         }
       },
       "[development]": {
@@ -79,10 +80,8 @@
             "database": "db/sidecar.db"
           }
         },
-        "requires": {
-          "auth": {
-            "kind": "xsuaa"
-          }
+        "auth": {
+          "kind": "xsuaa"
         }
       },
       "[production]": {
@@ -98,6 +97,7 @@
           "kind": "hana-cloud"
         },
         "auth": {
+          "kind": "xsuaa",
           "impl": "srv/dev-auth.js"
         }
       }

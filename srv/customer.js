@@ -8,7 +8,7 @@ module.exports = async (srv) => {
   const asb = await cds.connect.to("AzureServiceBus");
   const c4c = await cds.connect.to("C4C_Customer");
 
-  srv.before("READ", "CustomerService.IndividualCustomers", async (req) => {
+  srv.before("READ", "IndividualCustomers", async (req) => {
     const { ID: customerId, IsActiveEntity } = req.data;
 
     // READ is also emitted after CREATE, but without req.data
@@ -25,7 +25,10 @@ module.exports = async (srv) => {
 
       const c4cCustomer = await c4c.run(query);
       if (c4cCustomer) {
-        C4C_ID_Cache.set(c4cCustomer.CustomerID, c4cCustomer.ObjectID);
+        C4C_ID_Cache.set(
+          c4cCustomer.CustomerID.toString(),
+          c4cCustomer.ObjectID
+        );
         console.log("access granted");
       } else {
         req.reject(401, "No Access to this customer");
@@ -36,8 +39,8 @@ module.exports = async (srv) => {
   srv.before("NEW", "IndividualCustomers", async (req, next) => {
     const customer = req.data;
     if (!customer.ObjectID) {
-      if (C4C_ID_Cache.has(customer.ID)) {
-        req.data.ObjectID = C4C_ID_Cache.get(customer.ID);
+      if (C4C_ID_Cache.has(customer.ID.toString())) {
+        req.data.ObjectID = C4C_ID_Cache.get(customer.ID.toString());
       } else {
         const { IndividualCustomerCollection } = c4c.entities;
 
