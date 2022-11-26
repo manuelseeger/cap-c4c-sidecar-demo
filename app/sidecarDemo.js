@@ -23,23 +23,25 @@ Vue.createApp({
   },
 
   methods: {
-    async fetch(id) {
+    async getCustomerAssets(id) {
+      // first check for an existing draft
       const response = await fetch(
-        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
+        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
       );
       if (response.ok) {
         const data = await response.json();
         this.customer = data;
       } else if (response.status == 404) {
-        // existing draft
+        // then check for a committed, active version
         const response = await fetch(
-          `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
+          `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
         );
         if (response.ok) {
           const data = await response.json();
           this.customer = data;
         } else {
-          // draft create mode
+          // If no draft and no active version, create a new 
+          // initial draft entry
           const requestOptions = {
             method: "POST",
             body: JSON.stringify({ ID: parseInt(id) }),
@@ -52,7 +54,6 @@ Vue.createApp({
             requestOptions
           );
           const data = await response.json();
-          console.log(data);
           this.customer = data;
         }
       }
@@ -116,15 +117,16 @@ Vue.createApp({
       );
       console.log(response);
       console.log(await response.json());
-      this.fetch(this.customer.ID);
+      this.getCustomerAssets(this.customer.ID);
     },
   },
 
   async mounted() {
     const queryParams = new URLSearchParams(window.location.search);
     const id = parseInt(queryParams.get("customerId"));
-    const customer = await this.fetch(id);
-    if (customer.HasActiveEntity) {
+    const customer = await this.getCustomerAssets(id);
+    console.log(customer)
+    if (customer.IsActiveEntity) {
       this.enableDraft(customer.ID);
     }
   },

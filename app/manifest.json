@@ -1,0 +1,13 @@
+{
+  "version": "1.12.0",
+  "sap.app": {
+    "id": "sidecar.demo",
+    "applicationVersion": {
+      "version": "0.1.1"
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "cloud.service"
+  }
+}

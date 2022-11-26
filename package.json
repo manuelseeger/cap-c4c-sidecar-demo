@@ -8,6 +8,7 @@
   "dependencies": {
     "@azure/identity": "^3.1.0",
     "@azure/service-bus": "^7.7.3",
+    "@sap-cloud-sdk/connectivity": "^2.11.0",
     "@sap-cloud-sdk/http-client": "^2.11.0",
     "@sap/cds": "^6",
     "@sap/xssec": "^3",
@@ -24,7 +25,7 @@
     "start": "cds run",
     "build": "cds build --production && mbt build -t gen --mtar mta.tar",
     "predeploy": "npm run build",
-    "deploy": "cf deploy gen/mta.tar"
+    "deploy": "cf html5-push -n sidecar-html5-host app && cf deploy gen/mta.tar"
   },
   "engines": {
     "node": "^18.7"

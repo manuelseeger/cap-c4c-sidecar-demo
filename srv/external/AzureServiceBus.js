@@ -1,13 +1,13 @@
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const cds = require("@sap/cds");
-const { getDestination } = require("@sap-cloud-sdk/core");
+const { getDestination } = require("@sap-cloud-sdk/connectivity");
 
 class AzureServiceBusService extends cds.ApplicationService {
   async init() {
-    const destination = await getDestination(
-      this.options.credentials.destination
-    );
+    const destination = await getDestination({
+      destinationName: this.options.credentials.destination,
+    });
 
     const credential = new DefaultAzureCredential();
     this.serviceBusClient = new ServiceBusClient(destination.url, credential);
