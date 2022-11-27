@@ -25,7 +25,7 @@
     "start": "cds run",
     "build": "cds build --production && mbt build -t gen --mtar mta.tar",
     "predeploy": "npm run build",
-    "deploy": "cf html5-push -n sidecar-html5-host app && cf deploy gen/mta.tar"
+    "deploy": "cf deploy gen/mta.tar && cf html5-push -n sidecar-html5-host app/dist"
   },
   "engines": {
     "node": "^18.7"

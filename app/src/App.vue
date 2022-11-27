@@ -1,6 +1,10 @@
-const BASEPATH = "/cap";
-
-Vue.createApp({
+<script>
+import C4CCurrencyInput from './components/C4CCurrencyInput.vue';
+const API_BASEPATH = "/cap";
+export default {
+  components: {
+    C4CCurrencyInput: C4CCurrencyInput
+  },
   data() {
     return {
       customer: {
@@ -26,7 +30,7 @@ Vue.createApp({
     async getCustomerAssets(id) {
       // first check for an existing draft
       const response = await fetch(
-        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
+        `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
       );
       if (response.ok) {
         const data = await response.json();
@@ -34,7 +38,7 @@ Vue.createApp({
       } else if (response.status == 404) {
         // then check for a committed, active version
         const response = await fetch(
-          `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
+          `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
         );
         if (response.ok) {
           const data = await response.json();
@@ -50,7 +54,7 @@ Vue.createApp({
             },
           };
           const response = await fetch(
-            `${BASEPATH}/customer/IndividualCustomers`,
+            `${API_BASEPATH}/customer/IndividualCustomers`,
             requestOptions
           );
           const data = await response.json();
@@ -76,7 +80,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `${BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)`,
+        `${API_BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)`,
         requestOptions
       );
       console.log(response);
@@ -97,7 +101,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `${BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)/draftEdit`,
+        `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)/draftEdit`,
         requestOptions
       );
       console.log(response);
@@ -112,7 +116,7 @@ Vue.createApp({
         },
       };
       const response = await fetch(
-        `${BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)/draftActivate`,
+        `${API_BASEPATH}/customer/IndividualCustomers(ID=${this.customer.ID},IsActiveEntity=false)/draftActivate`,
         requestOptions
       );
       console.log(response);
@@ -130,4 +134,31 @@ Vue.createApp({
       this.enableDraft(customer.ID);
     }
   },
-}).mount("#app");
+}
+//<C4CCurrencyInput v-bind:modelValue="customer.totalAssets" title="Total Assets" id="totalAssets" />
+</script>
+
+<template>
+  <form @change="submitDraft">
+    <div id="fieldgrid" v-if="customer">
+      <template v-for="(value, key) in customer">
+        <C4CCurrencyInput 
+          v-model="customer[key]" 
+          v-if="key.startsWith('assets')" 
+          :title="$t(key)" 
+          :options="{ currency: 'EUR', currencyDisplay: 'hidden', precision: 2, locale: this.$i18n.locale }" />   
+      </template>
+    </div>
+    <input type="submit" value="Activate Draft" @click.prevent="activateDraft">
+  </form>
+
+</template>
+
+<style scoped>
+#fieldgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1em;
+}
+</style>

@@ -3,56 +3,7 @@
 
 <head>
     <title>Individual Customer Assets</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
-        #fieldgrid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 1em;
-        }
-
-        input,
-        input:focus {
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            -webkit-text-size-adjust: none;
-            background: transparent;
-            font-style: normal;
-            font-size: 0.875rem;
-            font-family: "72", "72full", Arial, Helvetica, sans-serif;
-            line-height: normal;
-            box-sizing: border-box;
-            min-width: 3rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: inherit;
-            border-radius: 0.5rem;
-            font-weight: 400;
-            margin: 0;
-            color: #30435a !important;
-            padding: 0.625rem 1rem;
-            border-color: #dedede;
-            border-width: 1px;
-            border-style: solid;
-            width: 187px;
-        }
-
-        label {
-            font-family: "72", "72full", Arial, Helvetica, sans-serif;
-            white-space: nowrap;
-            cursor: text;
-            color: #92a1ae;
-            line-height: 1rem;
-            font-size: 0.875rem;
-            font-weight: 700;
-            text-align: left;
-            display: block;
-            font-size: 14px;
-            padding-bottom: 4px;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            -webkit-text-size-adjust: none;
-        }
-
         input[type='submit'] {
             display: none !important;
         }
@@ -60,42 +11,21 @@
         div#app {
             padding-left: 7px;
         }
+
+        @font-face {
+            font-family: '72';
+            src: url('./src/assets/72-Regular.woff2') format('woff2');
+        }
     </style>
 </head>
 
-<body class="small-container">
+<body>
     <div id="app">
-        <form @change="submitDraft">
-            <div id="fieldgrid" v-if="customer">
 
-                <div class="flex-small">
-                    <label for="assetsCash">Cash</label>
-                    <input type="text" id="assetsCash" v-model="customer.assetsCash" />
-                </div>
-                <div class="flex-small">
-                    <label for="assetsSecurities">Securities</label>
-                    <input type="text" id="assetsSecurities" v-model="customer.assetsSecurities" />
-                </div>
-                <div class="flex-small">
-                    <label for="assetsRealEstate">Real Estate</label>
-                    <input type="text" id="assetsRealEstate" v-model="customer.assetsRealEstate" />
-                </div>
-                <div class="flex-small">
-                    <label for="assetsOther">Other</label>
-                    <input type="text" id="assetsOther" v-model="customer.assetsOther" />
-                </div>
-                <div class="flex-small">
-                    <label for="assetsTotal">Total Assets</label>
-                    <input type="text" readonly="readonly" id="assetsTotal" v-bind:value="totalAssets" />
-                </div>
-            </div>
-
-            <input type="submit" value="Activate Draft" @click.prevent="activateDraft">
-        </form>
     </div>
 
 </body>
 
-<script src="sidecarDemo.js" type="module"></script>
+<script type="module" src="/src/main.js"></script>
 
 </html>
