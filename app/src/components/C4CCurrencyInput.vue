@@ -57,7 +57,7 @@ export default {
         }
 
         label {
-            font-family: "72", "72full", Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             white-space: nowrap;
             cursor: text;
             color: #92a1ae;
@@ -66,7 +66,7 @@ export default {
             font-weight: 700;
             text-align: left;
             display: block;
-            letter-spacing: 0.7px;
+            letter-spacing: 0.5px;
             font-size: 14px;
             padding-bottom: 4px;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
