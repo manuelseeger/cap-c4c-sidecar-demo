@@ -28,17 +28,17 @@ export default {
 
   methods: {
     async getCustomerAssets(id) {
-      // first check for an existing draft
+      // first check for an active version
       const response = await fetch(
-        `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
+        `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
       );
       if (response.ok) {
         const data = await response.json();
         this.customer = data;
       } else if (response.status == 404) {
-        // then check for a committed, active version
+        // then check for existing draft
         const response = await fetch(
-          `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=true)`
+          `${API_BASEPATH}/customer/IndividualCustomers(ID=${id},IsActiveEntity=false)`
         );
         if (response.ok) {
           const data = await response.json();
